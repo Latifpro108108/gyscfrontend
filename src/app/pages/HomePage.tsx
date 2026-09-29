@@ -14,7 +14,7 @@ import { T } from "@/app/lib/theme";
 
 export function HomePage() {
   const { goTo } = useSiteNavigation();
-  const { text, image, founders } = useContent();
+  const { loading, text, image, founders } = useContent();
   const [amount, setAmount] = useState("$25");
   const [freq, setFreq] = useState<"one-time" | "monthly">("one-time");
   const [custom, setCustom] = useState("");
@@ -180,12 +180,6 @@ export function HomePage() {
         <div className="hero-bg" style={{ backgroundImage: `url(${heroBg})` }} />
         <div className="hero-overlay" />
         <div className="hero-shapes" aria-hidden>
-          <div className="hero-glow" />
-          <div className="float-orb float-orb-a" />
-          <div className="float-orb float-orb-b" />
-          <div className="float-orb float-orb-c" />
-          <div className="float-dot float-dot-a" />
-          <div className="float-dot float-dot-b" />
           <div className="hero-accent-bar" />
         </div>
 
@@ -199,24 +193,22 @@ export function HomePage() {
 
               <h1 className="hero-title">
                 <span className="hero-line anim-fade-up d1">
-                  <span style={{color: '#0f9f6f'}}>{text("hero_line1", "Young people.").split(' ')[0]}</span> {text("hero_line1", "Young people.").split(' ').slice(1).join(' ')}
+                  <span style={{ color: "#B83111" }}>{text("hero_line1", "Young people.").split(" ")[0]}</span> {text("hero_line1", "Young people.").split(" ").slice(1).join(" ")}
                 </span>
                 <span className="hero-line anim-fade-up d2">
                   <span className="hero-highlight">
-                    <span style={{color: '#38bdf8'}}>{text("hero_line2", "Real policy.").split(' ')[0]}</span> {text("hero_line2", "Real policy.").split(' ').slice(1).join(' ')}
+                    {text("hero_line2", "Real policy.")}
                     <span className="hero-underline anim-line-grow" />
                   </span>
                 </span>
                 <span className="hero-line anim-fade-up d3">
-                  <span style={{color: '#fbbf24'}}>{text("hero_line3", "Global impact.").split(' ')[0]}</span> {text("hero_line3", "Global impact.").split(' ').slice(1).join(' ')}
+                  {text("hero_line3", "Global impact.")}
                 </span>
               </h1>
 
-              <p className="hero-desc anim-fade-up d4" dangerouslySetInnerHTML={{ 
-                __html: text("hero_description", "GYSC unites delegates from every continent — turning youth conviction into policies that reach the highest levels of global governance.")
-                  .replace("youth conviction", "<span style='color: #0f9f6f; font-weight: 600'>youth conviction</span>")
-                  .replace("global governance", "<span style='color: #0f9f6f; font-weight: 600'>global governance</span>")
-              }} />
+              <p className="hero-desc anim-fade-up d4">
+                {text("hero_description", "GYSC unites delegates from every continent — turning youth conviction into policies that reach the highest levels of global governance.")}
+              </p>
 
               <div className="hero-btns anim-fade-up d5">
                 <button className="btn btn-white" onClick={() => goTo("/register")}>Join GYSC <ArrowRight size={16} /></button>
@@ -432,17 +424,23 @@ export function HomePage() {
             </div>
           </Reveal>
           <div className="founders-strip-grid">
-            {founders.map((f, i) => (
-              <Reveal key={f._id} delay={i * 50}>
-                <div className="founder-strip-item">
-                  <div className="founder-avatar ring-pulse">
-                    {f.imageUrl ? <img src={f.imageUrl} alt={f.name} /> : <UserCircle size={36} color={T.border} />}
+            {founders.length === 0 ? (
+              <p className="newsletter-empty" role={loading ? "status" : undefined}>
+                {loading ? "Loading founder profiles…" : "Founder profiles are currently unavailable."}
+              </p>
+            ) : (
+              founders.map((f, i) => (
+                <Reveal key={f._id} delay={i * 50}>
+                  <div className="founder-strip-item">
+                    <div className="founder-avatar ring-pulse">
+                      {f.imageUrl ? <img src={f.imageUrl} alt={f.name} /> : <UserCircle size={36} color={T.border} />}
+                    </div>
+                    <span className="founder-name">{f.name}</span>
+                    <span className="founder-country">{f.country}</span>
                   </div>
-                  <span className="founder-name">{f.name}</span>
-                  <span className="founder-country">{f.country}</span>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))
+            )}
           </div>
         </div>
       </section>

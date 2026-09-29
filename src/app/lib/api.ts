@@ -1,5 +1,10 @@
 const API_BASE = import.meta.env.VITE_API_URL || "/api";
 
+export function getApiUrl(path: string) {
+  const base = API_BASE.replace(/\/+$/, "");
+  return `${base}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 function getToken() {
   return localStorage.getItem("gysc_token");
 }
@@ -19,7 +24,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     headers["Content-Type"] = headers["Content-Type"] || "application/json";
   }
 
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers, credentials: "include" });
+  const res = await fetch(getApiUrl(path), { ...options, headers, credentials: "include" });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.message || data.error || "Request failed");
   return data as T;
@@ -100,7 +105,7 @@ export interface RegisterPayload {
 }
 
 export const api = {
-  getContent: () => request<SiteContent>("/content"),
+  getContent: (signal?: AbortSignal) => request<SiteContent>("/content", { signal }),
 
   login: (email: string, password: string) =>
     request<{ token: string; user: AuthUser }>("/auth/login", {

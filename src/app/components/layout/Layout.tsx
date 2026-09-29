@@ -10,7 +10,7 @@ export function Layout() {
   const isAdmin = pathname.startsWith("/admin");
 
   return (
-    <div className="site-shell" style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: T.navy }}>
+    <div className="site-shell" style={{ fontFamily: "'Inter', sans-serif", background: T.cream, color: T.ink }}>
       <ScrollToHash />
       {!isAdmin && <NavBar />}
       <Outlet />

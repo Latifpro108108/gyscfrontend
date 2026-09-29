@@ -22,17 +22,12 @@ All colors derived from brand assets (logo + brand board).
 
 | Token | Hex | Role |
 |---|---|---|
-| `--color-navy` | `#1B365D` | Primary text, headings, nav, footer |
-| `--color-blue` | `#4287F5` | Interactive elements, links, CTAs |
-| `--color-blue-mid` | `#3A6EA5` | Secondary buttons, card borders |
-| `--color-teal` | `#0f9f6f` | Accent, active states, highlight |
-| `--color-green` | `#34c759` | Success states, SDG accent strip |
-| `--color-green-dark` | `#15803d` | Hover on green elements |
-| `--color-white` | `#FFFFFF` | Backgrounds, reversed text |
-| `--color-surface` | `#F4F7FC` | Section backgrounds (light wash) |
-| `--color-border` | `#DDE4EE` | Dividers, card outlines |
-| `--color-text-body` | `#2D3748` | Body copy |
-| `--color-text-muted` | `#64748B` | Captions, meta labels |
+| `--color-cream` | `#F8F6F2` | Primary background and light surfaces |
+| `--color-red` | `#B83111` | Identity, authority, interactive highlights |
+| `--color-gold` | `#D4A72C` | Accents, quotes, decorative details |
+| `--color-ink` | `#171717` | Main text and readability |
+| `--color-border` | `#E6DDC9` | Dividers and card outlines |
+| `--color-text-muted` | `#5F5B55` | Captions and meta labels |
 
 > **Rule:** No purple, no gradients unless referencing the logo's green-to-blue globe gradient. No black backgrounds.
 
@@ -384,7 +379,7 @@ Card hover: `translateY(-3px)` · `--shadow-raised`
 
 All images across all pages are placeholders during design review. Use this standard for every one:
 
-- Background: `--color-surface` (#F4F7FC)
+- Background: `--color-surface` (#F8F6F2)
 - Border: 1.5px dashed `--color-border`
 - Border-radius: matches context (`--radius-md` for cards, `--radius-lg` for hero)
 - Center label in `--type-caption` `--color-text-muted`:

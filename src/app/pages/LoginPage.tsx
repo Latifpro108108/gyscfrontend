@@ -31,7 +31,7 @@ export function LoginPage() {
       title="Welcome back"
       subtitle="Sign in to your GYSC member account. The public website stays open to everyone — no login required to browse."
       footer={
-        <p style={{ fontSize: 14, color: "#64748B", lineHeight: 1.7 }}>
+        <p style={{ fontSize: 14, color: "#5F5B55", lineHeight: 1.7 }}>
           Don't have an account? <AuthLink to="/register">Create one</AuthLink>
           {" · "}
           <AuthLink to="/admin/login">Admin login</AuthLink>
@@ -44,8 +44,8 @@ export function LoginPage() {
           <input type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
-        <p style={{ fontSize: 13, marginBottom: 16, color: "#64748B" }}>
-          Forgot your password? Contact <a href="mailto:privacy@gysc.ca" style={{ color: "#0f9f6f", fontWeight: 600 }}>privacy@gysc.ca</a> for assistance.
+        <p style={{ fontSize: 13, marginBottom: 16, color: "#5F5B55" }}>
+          Forgot your password? Contact <a href="mailto:privacy@gysc.ca" style={{ color: "#B83111", fontWeight: 600 }}>privacy@gysc.ca</a> for assistance.
         </p>
         <button className="btn btn-primary btn-fw" type="submit" disabled={loading}>
           {loading ? "Signing in..." : "Sign in"} <LogIn size={16} />

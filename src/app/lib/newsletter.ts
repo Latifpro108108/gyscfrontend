@@ -1,7 +1,9 @@
+import { getApiUrl } from "@/app/lib/api";
+
 export function getNewsletterApiUrls(id: string) {
   return {
-    view: `/api/content/newsletters/${id}/pdf`,
-    download: `/api/content/newsletters/${id}/download`,
+    view: getApiUrl(`/content/newsletters/${id}/pdf`),
+    download: getApiUrl(`/content/newsletters/${id}/download`),
   };
 }
 

@@ -376,7 +376,7 @@ function FounderEditor({ founder, run, busy }: { founder: Founder; run: Function
 }
 
 function NewslettersTab({ newsletters, run, busy }: { newsletters: Newsletter[]; run: Function; busy: boolean }) {
-  const empty = { issue: "", date: "", title: "", excerpt: "", color: "#0f9f6f" };
+  const empty = { issue: "", date: "", title: "", excerpt: "", color: "#B83111" };
   const [form, setForm] = useState(empty);
   const [pdf, setPdf] = useState<File | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
