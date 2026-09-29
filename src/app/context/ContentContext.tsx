@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { api, Founder, Newsletter, SiteContent, SiteImage, SiteText } from "@/app/lib/api";
+import { ActivityPost, api, Founder, Newsletter, SiteContent, SiteImage, SiteText } from "@/app/lib/api";
 import defaultLogo from "@/imports/IMG-20260607-WA0005-removebg-preview.png";
 import { ABOUT_IMG, HERO_BG } from "@/app/lib/theme";
 
@@ -24,7 +24,7 @@ function readCachedContent(): SiteContent | null {
       !content.textMap ||
       !content.imageMap
     ) return null;
-    return content;
+    return { ...content, posts: Array.isArray(content.posts) ? content.posts : [] };
   } catch {
     return null;
   }
@@ -36,6 +36,7 @@ interface ContentContextValue {
   texts: SiteText[];
   founders: Founder[];
   newsletters: Newsletter[];
+  posts: ActivityPost[];
   text: (key: string, fallback?: string) => string;
   image: (key: string, fallback?: string) => string;
   refresh: () => Promise<boolean>;
@@ -109,6 +110,7 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
       texts: content?.texts ?? [],
       founders: content?.founders ?? [],
       newsletters: content?.newsletters ?? [],
+      posts: content?.posts ?? [],
       text,
       image,
       refresh,

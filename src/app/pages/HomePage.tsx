@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { MissionPulse } from "@/app/components/MissionPulse";
 import { NewsletterSection } from "@/app/components/NewsletterSection";
+import { UpdatesSection } from "@/app/components/UpdatesSection";
 import { SDGWheel } from "@/app/components/SDGWheel";
 import { Label, Reveal, SectionIntro } from "@/app/components/shared";
 import { useContent } from "@/app/context/ContentContext";
@@ -224,6 +225,7 @@ export function HomePage() {
       </section>
 
       <MissionPulse />
+      <UpdatesSection />
 
       {/* ── OUR STORY ── */}
       <section id="about" className="section story-section">

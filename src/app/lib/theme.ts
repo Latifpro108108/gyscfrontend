@@ -63,6 +63,7 @@ export const NEWSLETTERS = [
 ];
 
 export const NAV_LINKS = [
+  { label: "Updates", to: "/updates" },
   { label: "About", to: "/#about" },
   { label: "Founders", to: "/founders" },
   { label: "Donate", to: "/#donate" },
@@ -74,6 +75,7 @@ export const FOOTER_COLUMNS = [
     items: [
       { label: "About GYSC", to: "/#about" },
       { label: "Our Work", to: "/#pillars" },
+      { label: "Activities & Collaborations", to: "/updates" },
       { label: "Founders", to: "/founders" },
       { label: "Newsletter", to: "/#newsletter" },
       { label: "Donate", to: "/#donate" },

@@ -3,12 +3,13 @@ import { LayoutDashboard, Mail, Newspaper, Settings, Users, FileText } from "luc
 import { useAuth } from "@/app/context/AuthContext";
 import { T } from "@/app/lib/theme";
 
-export type AdminSection = "dashboard" | "members" | "newsletter" | "content" | "founders" | "settings";
+export type AdminSection = "dashboard" | "members" | "newsletter" | "posts" | "content" | "founders" | "settings";
 
 const NAV: { id: AdminSection; label: string; Icon: typeof LayoutDashboard; superOnly?: boolean }[] = [
   { id: "dashboard", label: "Dashboard", Icon: LayoutDashboard },
   { id: "members", label: "Members", Icon: Users },
   { id: "newsletter", label: "Newsletter", Icon: Mail },
+  { id: "posts", label: "Posts", Icon: Newspaper },
   { id: "content", label: "Content Manager", Icon: FileText },
   { id: "founders", label: "Founders", Icon: Users },
   { id: "settings", label: "Settings", Icon: Settings, superOnly: true },

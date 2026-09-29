@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { ImagePlus, LogOut, Newspaper, Trash2, Type, Users } from "lucide-react";
 import { AdminLayout, AdminSection, AdminStatCard } from "@/app/components/admin/AdminLayout";
+import { PostsTab } from "@/app/components/admin/PostsTab";
 import { useAuth } from "@/app/context/AuthContext";
 import { useContent } from "@/app/context/ContentContext";
 import { api, AuthUser, Founder, Newsletter } from "@/app/lib/api";
@@ -55,6 +56,7 @@ export function AdminDashboard() {
       {section === "dashboard" && <DashboardPanel />}
       {section === "members" && <MembersPanel />}
       {section === "newsletter" && <NewslettersTab newsletters={newsletters} run={run} busy={busy} />}
+          {section === "posts" && <PostsTab refreshPublicContent={refresh} />}
       {section === "content" && (
         <>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
@@ -76,6 +78,7 @@ function sectionLabel(s: AdminSection) {
     dashboard: "Dashboard",
     members: "Members",
     newsletter: "Newsletter",
+    posts: "Posts",
     content: "Content Manager",
     founders: "Founders",
     settings: "Settings",
