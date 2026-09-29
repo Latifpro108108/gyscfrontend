@@ -83,6 +83,24 @@ export interface Newsletter {
   pdfUrl?: string;
 }
 
+export interface ActivityPost {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  body?: string;
+  category: "activity" | "collaboration";
+  partner: string;
+  eventDate: string;
+  coverImageUrl: string;
+  coverCloudinaryPublicId: string;
+  status: "draft" | "published";
+  featured: boolean;
+  publishedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface SiteContent {
   images: SiteImage[];
   texts: SiteText[];
@@ -90,6 +108,7 @@ export interface SiteContent {
   imageMap: Record<string, string>;
   founders: Founder[];
   newsletters: Newsletter[];
+  posts: ActivityPost[];
 }
 
 export interface RegisterPayload {
@@ -106,6 +125,12 @@ export interface RegisterPayload {
 
 export const api = {
   getContent: (signal?: AbortSignal) => request<SiteContent>("/content", { signal }),
+  getPublicPosts: () => request<ActivityPost[]>("/content/posts"),
+  getPost: (slug: string) => request<ActivityPost>(`/content/posts/${encodeURIComponent(slug)}`),
+  getAdminPosts: () => request<ActivityPost[]>("/admin/posts"),
+  createPost: (data: FormData) => request<ActivityPost>("/admin/posts", { method: "POST", body: data }),
+  updatePost: (id: string, data: FormData) => request<ActivityPost>(`/admin/posts/${id}`, { method: "PUT", body: data }),
+  deletePost: (id: string) => request<{ message: string }>(`/admin/posts/${id}`, { method: "DELETE" }),
 
   login: (email: string, password: string) =>
     request<{ token: string; user: AuthUser }>("/auth/login", {

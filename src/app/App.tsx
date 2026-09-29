@@ -12,6 +12,7 @@ import { PartnerPage } from "@/app/pages/PartnerPage";
 import { PrivacyPage } from "@/app/pages/PrivacyPage";
 import { RegisterPage } from "@/app/pages/RegisterPage";
 import { TermsPage } from "@/app/pages/TermsPage";
+import { UpdatePostPage, UpdatesPage } from "@/app/pages/UpdatesPages";
 import { Label, PageShell } from "@/app/components/shared";
 import { T } from "@/app/lib/theme";
 import { useSiteNavigation } from "@/app/lib/navigation";
@@ -37,6 +38,8 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="founders" element={<FoundersPage />} />
+          <Route path="updates" element={<UpdatesPage />} />
+          <Route path="updates/:slug" element={<UpdatePostPage />} />
           <Route path="join" element={<JoinPage />} />
           <Route path="newsletters/:id" element={<NewsletterReaderPage />} />
           <Route path="login" element={<LoginPage />} />
