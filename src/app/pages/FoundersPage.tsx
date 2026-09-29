@@ -4,7 +4,7 @@ import { useContent } from "@/app/context/ContentContext";
 import { T } from "@/app/lib/theme";
 
 export function FoundersPage() {
-  const { founders, text } = useContent();
+  const { founders, loading, text } = useContent();
 
   return (
     <PageShell>
@@ -19,29 +19,35 @@ export function FoundersPage() {
       </div>
 
       <div className="founders-grid">
-        {founders.map((f, i) => (
-          <Reveal key={f._id} delay={i * 55}>
-            <div className="founder-card">
-              {f.imageUrl ? (
-                <img src={f.imageUrl} alt={f.name} style={{ width: "100%", height: 250, objectFit: "cover", display: "block" }} />
-              ) : (
-                <ImgBox label="[Image: Founder photo]" height={250} radius={0} />
-              )}
-              <div style={{ padding: "26px 28px 32px", flex: 1, display: "flex", flexDirection: "column" }}>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: T.navy, marginBottom: 4 }}>{f.name}</h3>
-                <p style={{ fontSize: 13, fontWeight: 600, color: T.teal, letterSpacing: "0.2px", marginBottom: 10 }}>{f.role}</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
-                  <MapPin size={13} color={T.muted} />
-                  <span style={{ fontSize: 13, color: T.muted }}>{f.country}</span>
-                </div>
-                <div style={{ borderTop: `1px solid ${T.border}`, paddingTop: 18, flex: 1 }}>
-                  <p style={{ fontSize: 11, fontWeight: 800, color: T.muted, letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 10 }}>A message</p>
-                  <p style={{ fontSize: 14.5, color: T.body, lineHeight: 1.78, fontStyle: "italic" }}>"{f.message}"</p>
+        {founders.length === 0 ? (
+          <p className="newsletter-empty" role={loading ? "status" : undefined}>
+            {loading ? "Loading founder profiles…" : "Founder profiles are currently unavailable."}
+          </p>
+        ) : (
+          founders.map((f, i) => (
+            <Reveal key={f._id} delay={i * 55}>
+              <div className="founder-card">
+                {f.imageUrl ? (
+                  <img src={f.imageUrl} alt={f.name} style={{ width: "100%", height: 250, objectFit: "cover", display: "block" }} />
+                ) : (
+                  <ImgBox label="[Image: Founder photo]" height={250} radius={0} />
+                )}
+                <div style={{ padding: "26px 28px 32px", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: T.navy, marginBottom: 4 }}>{f.name}</h3>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: T.teal, letterSpacing: "0.2px", marginBottom: 10 }}>{f.role}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
+                    <MapPin size={13} color={T.muted} />
+                    <span style={{ fontSize: 13, color: T.muted }}>{f.country}</span>
+                  </div>
+                  <div style={{ borderTop: `1px solid ${T.border}`, paddingTop: 18, flex: 1 }}>
+                    <p style={{ fontSize: 11, fontWeight: 800, color: T.muted, letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 10 }}>A message</p>
+                    <p style={{ fontSize: 14.5, color: T.body, lineHeight: 1.78, fontStyle: "italic" }}>"{f.message}"</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
-        ))}
+            </Reveal>
+          ))
+        )}
       </div>
     </PageShell>
   );

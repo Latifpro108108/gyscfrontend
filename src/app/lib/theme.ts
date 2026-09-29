@@ -1,12 +1,16 @@
 export const T = {
-  navy: "#1B365D",
-  blue: "#4287F5",
-  teal: "#0f9f6f",
-  green: "#34c759",
-  surface: "#F4F7FC",
-  border: "#DDE4EE",
-  body: "#2D3748",
-  muted: "#64748B",
+  cream: "#F8F6F2",
+  red: "#B83111",
+  gold: "#D4A72C",
+  ink: "#171717",
+  navy: "#171717",
+  blue: "#B83111",
+  teal: "#B83111",
+  green: "#D4A72C",
+  surface: "#F8F6F2",
+  border: "#E6DDC9",
+  body: "#171717",
+  muted: "#5F5B55",
 } as const;
 
 export const HERO_BG =

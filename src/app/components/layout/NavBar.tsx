@@ -43,7 +43,7 @@ export function NavBar() {
             </>
           )}
           {isAdmin && (
-            <button className="btn btn-primary btn-sm" style={{ backgroundColor: "#0f9f6f", borderColor: "#0f9f6f", color: "#fff" }} onClick={() => navigate("/admin")}>Edit Site</button>
+            <button className="btn btn-primary btn-sm" style={{ backgroundColor: "#B83111", borderColor: "#B83111", color: "#F8F6F2" }} onClick={() => navigate("/admin")}>Edit Site</button>
           )}
         </div>
 
@@ -65,7 +65,7 @@ export function NavBar() {
           )}
           {isAdmin && (
             <div className="mob-nav-cta">
-              <button className="btn btn-primary btn-fw" style={{ backgroundColor: "#0f9f6f", borderColor: "#0f9f6f", color: "#fff" }} onClick={() => navigate("/admin")}>Edit Site</button>
+              <button className="btn btn-primary btn-fw" style={{ backgroundColor: "#B83111", borderColor: "#B83111", color: "#F8F6F2" }} onClick={() => navigate("/admin")}>Edit Site</button>
             </div>
           )}
         </div>

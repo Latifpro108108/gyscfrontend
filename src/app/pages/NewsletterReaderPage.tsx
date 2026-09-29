@@ -3,24 +3,25 @@ import { ArrowLeft, Download } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router";
 import { PageShell } from "@/app/components/shared";
 import { useContent } from "@/app/context/ContentContext";
-import { newsletterDownloadName } from "@/app/lib/newsletter";
+import { getNewsletterApiUrls, newsletterDownloadName } from "@/app/lib/newsletter";
 import { T } from "@/app/lib/theme";
 
 const PdfViewer = lazy(() => import("@/app/components/PdfViewer").then((m) => ({ default: m.PdfViewer })));
 
 export function NewsletterReaderPage() {
   const { id } = useParams<{ id: string }>();
-  const { newsletters } = useContent();
+  const { loading, newsletters } = useContent();
   const newsletter = newsletters.find((n) => n._id === id);
 
   if (!newsletter) {
+    if (loading) {
+      return <PageShell><div className="newsletter-reader-empty" role="status"><p style={{ color: T.muted }}>Loading publication…</p></div></PageShell>;
+    }
     return <Navigate to="/404" replace />;
   }
 
   const fileName = newsletterDownloadName(newsletter.issue, newsletter.title);
-  // Use server proxy endpoints — same origin avoids CORS issues with Cloudinary
-  const viewUrl = `/api/content/newsletters/${newsletter._id}/pdf`;
-  const downloadUrl = `/api/content/newsletters/${newsletter._id}/download`;
+  const { view: viewUrl, download: downloadUrl } = getNewsletterApiUrls(newsletter._id);
 
   return (
     <PageShell>

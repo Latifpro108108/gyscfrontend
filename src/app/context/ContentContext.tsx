@@ -8,6 +8,27 @@ const IMAGE_FALLBACKS: Record<string, string> = {
   hero_background: HERO_BG,
   about_image: ABOUT_IMG,
 };
+const CONTENT_CACHE_KEY = "gysc_public_content_v1";
+
+function readCachedContent(): SiteContent | null {
+  try {
+    const value = localStorage.getItem(CONTENT_CACHE_KEY);
+    if (!value) return null;
+    const content = JSON.parse(value) as SiteContent;
+    if (
+      !content ||
+      !Array.isArray(content.images) ||
+      !Array.isArray(content.texts) ||
+      !Array.isArray(content.founders) ||
+      !Array.isArray(content.newsletters) ||
+      !content.textMap ||
+      !content.imageMap
+    ) return null;
+    return content;
+  } catch {
+    return null;
+  }
+}
 
 interface ContentContextValue {
   loading: boolean;
@@ -17,28 +38,54 @@ interface ContentContextValue {
   newsletters: Newsletter[];
   text: (key: string, fallback?: string) => string;
   image: (key: string, fallback?: string) => string;
-  refresh: () => Promise<void>;
+  refresh: () => Promise<boolean>;
 }
 
 const ContentContext = createContext<ContentContextValue | null>(null);
 
 export function ContentProvider({ children }: { children: React.ReactNode }) {
-  const [content, setContent] = useState<SiteContent | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState<SiteContent | null>(readCachedContent);
+  const [loading, setLoading] = useState(() => content === null);
 
   const refresh = useCallback(async () => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 12_000);
     try {
-      const data = await api.getContent();
+      const data = await api.getContent(controller.signal);
       setContent(data);
+      try {
+        localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(data));
+      } catch {
+        // Continue without persistence if storage is unavailable or full.
+      }
+      return true;
     } catch (e) {
-      console.error("Failed to load site content", e);
+      if (!(e instanceof DOMException && e.name === "AbortError")) {
+        console.error("Failed to load site content", e);
+      }
+      return false;
     } finally {
+      window.clearTimeout(timeout);
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    refresh();
+    let cancelled = false;
+    let retryTimer: number | undefined;
+
+    async function loadContent() {
+      const loaded = await refresh();
+      if (!loaded && !cancelled) {
+        retryTimer = window.setTimeout(() => void loadContent(), 10_000);
+      }
+    }
+
+    void loadContent();
+    return () => {
+      cancelled = true;
+      if (retryTimer !== undefined) window.clearTimeout(retryTimer);
+    };
   }, [refresh]);
 
   const text = useCallback(

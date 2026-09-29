@@ -2,16 +2,20 @@ import { Download, FileText } from "lucide-react";
 import { Link } from "react-router";
 import { Reveal } from "@/app/components/shared";
 import { useContent } from "@/app/context/ContentContext";
-import { groupNewslettersByYear, newsletterDownloadName } from "@/app/lib/newsletter";
+import { getNewsletterApiUrls, groupNewslettersByYear, newsletterDownloadName } from "@/app/lib/newsletter";
 
 export function NewsletterSection() {
-  const { newsletters } = useContent();
+  const { loading, newsletters } = useContent();
   const grouped = groupNewslettersByYear(newsletters);
 
   return (
     <div className="newsletter-academic">
       {newsletters.length === 0 ? (
-        <p className="newsletter-empty">No publications yet. New issues will appear here once uploaded by the GYSC team.</p>
+        loading ? (
+          <p className="newsletter-empty" role="status">Loading publications…</p>
+        ) : (
+          <p className="newsletter-empty">No publications yet. New issues will appear here once uploaded by the GYSC team.</p>
+        )
       ) : (
         grouped.map(([year, items], gi) => (
           <Reveal key={year} delay={gi * 60}>
@@ -40,7 +44,7 @@ export function NewsletterSection() {
                             <Link to={`/newsletters/${n._id}`} className="pub-link pub-link-primary">
                               <FileText size={15} /> View
                             </Link>
-                            <a href={`/api/content/newsletters/${n._id}/download`} download={fileName} className="pub-link">
+                            <a href={getNewsletterApiUrls(n._id).download} download={fileName} className="pub-link">
                               <Download size={15} /> Download
                             </a>
                           </>

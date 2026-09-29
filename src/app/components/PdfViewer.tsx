@@ -35,7 +35,7 @@ export function PdfViewer({ url, title = "Publication" }: PdfViewerProps) {
         const res = await fetch(url);
         const contentType = res.headers.get("content-type") || "";
 
-        if (!res.ok || contentType.includes("application/json")) {
+        if (!res.ok) {
           let message = "Unable to load this PDF.";
           try {
             const data = contentType.includes("json") ? await res.json() : await res.clone().json();
@@ -51,6 +51,14 @@ export function PdfViewer({ url, title = "Publication" }: PdfViewerProps) {
         }
 
         const blob = await res.blob();
+        const header = await blob.slice(0, 1024).text();
+        if (!header.includes("%PDF-")) {
+          if (!cancelled) {
+            setError("The server did not return a valid PDF. Try downloading the file or contact the site team.");
+            setLoading(false);
+          }
+          return;
+        }
         blobUrl = URL.createObjectURL(blob);
         const doc = await pdfjsLib.getDocument(blobUrl).promise;
         if (cancelled) return;

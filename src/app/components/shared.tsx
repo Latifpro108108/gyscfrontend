@@ -91,13 +91,23 @@ export function ImgBox({ label, height = 360, radius = 12 }: { label: string; he
 }
 
 export function CanadaFlag({ size = 28 }: { size?: number }) {
-  const h = Math.round(size * 0.6);
+  const h = Math.round(size / 2);
   return (
-    <svg width={size} height={h} viewBox="0 0 60 36" style={{ borderRadius: 3, flexShrink: 0 }}>
-      <rect width="60" height="36" fill="#fff" />
-      <rect width="15" height="36" fill="#D52B1E" />
-      <rect x="45" width="15" height="36" fill="#D52B1E" />
-      <path d="M30 4 L32 10 L38 9 L34 13 L36 19 L30 16 L24 19 L26 13 L22 9 L28 10 Z" fill="#D52B1E" />
+    <svg
+      width={size}
+      height={h}
+      viewBox="0 0 60 30"
+      role="img"
+      aria-label="Canadian flag"
+      style={{ borderRadius: 2, flexShrink: 0 }}
+    >
+      <rect width="60" height="30" fill="#fff" />
+      <rect width="15" height="30" fill="#D52B1E" />
+      <rect x="45" width="15" height="30" fill="#D52B1E" />
+      <path
+        d="M30 3 32.3 9.4 35.1 7.5 35.4 11.7 39.1 10.8 37.8 14.3 42 14.9 38.3 17.2 39.7 20.1 34.8 19.3 35 24.3 31.2 21.7 30 27 28.8 21.7 25 24.3 25.2 19.3 20.3 20.1 21.7 17.2 18 14.9 22.2 14.3 20.9 10.8 24.6 11.7 24.9 7.5 27.7 9.4Z"
+        fill="#D52B1E"
+      />
     </svg>
   );
 }
